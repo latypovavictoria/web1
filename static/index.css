@@ -1,0 +1,17 @@
+.me-2 {
+    margin-right: .890rem!important;
+}
+.question {
+    margin: -40px 70px 80px;
+    width: 700px;
+    height: 400px;
+    border: 2px solid black;
+    border-radius: 20px;
+}
+li{
+	    margin: 5px -3px
+}
+hr {
+	color:black;
+	size:2px;
+}

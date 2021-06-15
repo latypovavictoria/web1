@@ -1,0 +1,30 @@
+{% load static %}
+<div class="pagination" style="margin: 15px 70px;">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1"><div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+  <div class="btn-group me-2" role="group" aria-label="First group">
+    <button type="button" class="btn btn-primary">First</button></div></div></a>
+            <a href="?page={{ page_obj.previous_page_number }}">
+			<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+  <div class="btn-group me-2" role="group" aria-label="First group">
+    <button type="button" class="btn btn-primary" style="margin: -39px 70px;
+    height: 40px;"><- Previous</button></div></div></a>
+        {% endif %}
+
+        <span style="color:blue; margin: 223px;">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}"><div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+  <div class="btn-group me-2" role="group" aria-label="First group">
+    <button type="button" class="btn btn-primary" style="margin: -63px 193px;
+    height: 40px;">Next -></button></div></div></a>
+            <a href="?page={{ page_obj.paginator.num_pages }}"><div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+  <div class="btn-group me-2" role="group" aria-label="First group">
+    <button type="button" class="btn btn-primary" style="margin: -63px 292px;
+    height: 40px;">Last</button></div></div> </a>
+        {% endif %}
+    </span>
+</div>

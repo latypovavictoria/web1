@@ -1,0 +1,8 @@
+{
+  "v3_use_offset": true,
+  "token_hmac_secret_key": "5fa45e00-2e13-430b-99c7-d9dbf9992fbd",
+  "admin_password": "53dc54d7-5ca0-44ea-81f2-6d2fc9b9c85c",
+  "admin_secret": "a38330b6-ec19-444e-851f-cb780e23add6",
+  "api_key": "d3f4bb2c-e177-48fd-b495-bfc850b03cda",
+  "allowed_origins": ["http://192.168.181.169"]
+}

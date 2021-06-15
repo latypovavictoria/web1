@@ -1,0 +1,19 @@
+.question {
+    margin: 50px 70px 0px;
+    width: 700px;
+    height: 1000px;
+}
+.question1 {
+    margin: 20px 70px;
+    width: 700px;
+    height: 300px;
+    border: 2px solid black;
+    border-radius: 20px;
+}
+.question2 {
+    margin: -40px 70px 50px;
+    width: 700px;
+    height: 200px;
+    border: 2px solid black;
+    border-radius: 20px;
+}

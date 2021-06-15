@@ -1,0 +1,7 @@
+.question {
+    margin: -100px 100px 0px 100;
+    width: 900px;
+    height: 700px;
+    border: 2px solid black;
+    border-radius: 20px;
+}

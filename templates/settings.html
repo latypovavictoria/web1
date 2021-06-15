@@ -1,0 +1,41 @@
+{% load static %}
+{% load bootstrap4 %}
+<html>
+<head>
+ <meta charset="utf-8">
+ <title>Settings</title>
+<link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+<link href="{% static "register.css" %}" rel="stylesheet">
+<link rel="icon" href="{% static "eye.png" %}" type="image/x-icon">
+</head>
+<body>
+{% include "shablon/navbar.html" %}
+	<div>
+<h4 style="
+    margin: 155px 95px 0px;
+    /* float: left; */
+    display: inline-block;
+">Settings</h4><p style="
+    margin: -25px 250px;
+"></p>
+</div>
+{% block tag %}
+{% include "shablon/tags.html" %}
+{% endblock tag %}
+	<div class="question" style="
+    background: whitesmoke; height:400px; margin: -50px 70px 300px;
+">
+    <form class="form mt-5" action="/settings/" enctype="multipart/form-data" method="POST" style="width: 800; margin: 0px 45px;">
+	{% csrf_token %}
+	{% bootstrap_form form %}
+	{% buttons %}
+	<button type="submit" class="btn btn-primary" style="margin: 30px 0px">
+	Safe
+	</button>
+	{% endbuttons %}
+<br>
+  </form>
+</div>
+{% include "shablon/footer.html" %}
+</body>
+</html>

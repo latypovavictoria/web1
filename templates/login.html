@@ -1,0 +1,65 @@
+{% load static %}
+{% load bootstrap4 %}
+<html lang="en" class="h-100"><head>
+    <meta charset="utf-8">
+    <title>Log In</title>
+<link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+<link href="{% static "ask.css" %}" rel="stylesheet">
+<link rel="icon" href="{% static "eye.png" %}" type="image/x-icon">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    .pic{
+        float:left;
+        margin:0px 3px;
+    }
+    </style>
+  </head>
+  <body class="d-flex flex-column h-100">
+    
+{% include "shablon/navbar.html" %}
+<div>
+<h4 style="
+    margin: 155px 95px 0px;
+    /* float: left; */
+    display: inline-block;
+">Log In</h4><p style="
+    margin: -25px 250px;
+"></p>
+      </div>
+    {% block tag %}
+{% include "shablon/tags.html" %}
+{% endblock tag %}
+	<div class="question" style="
+    background: whitesmoke;
+">
+    <form class="form mt-5" action="/login/" method="POST" style="width: 800; margin: 0px 45px;">
+	{% csrf_token %}
+	{% bootstrap_form form %}
+	{% buttons %}
+	<button type="submit" class="btn btn-primary">
+	Login
+	</button>
+	{% endbuttons %}
+<br>
+  </form>
+</div>
+<footer class="foo">
+<hr style="
+    margin: 200 0 0 0;
+">
+<p style="text-align:center;color:black;margin: 0.1px;">@Developed by APO-13</p>
+</footer>
+</body></html>

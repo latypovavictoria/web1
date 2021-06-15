@@ -1,0 +1,109 @@
+{% load static %}
+<html lang="en" class="h-100"><head>
+    <meta charset="utf-8">
+    <title>Hot questions</title>
+<link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/static/index.css" rel="stylesheet">
+<link href="/static/strelka.css" rel="stylesheet">
+<link rel="icon" href="/static/eye.png" type="image/x-icon">
+<link href="{% static "strelka.css" %}" rel="stylesheet">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    .pic{
+        float:left;
+        margin:0px 3px;
+    }
+    </style>
+  </head>
+  <body class="d-flex flex-column h-100">
+    
+{% include "shablon/navbar.html" %}
+      <div>
+<h4 style="
+    margin: 150px 70px 0px;
+    /* float: left; */
+    display: inline-block;
+">Hot Questions</h4><p style="
+    margin: -25px 250px;
+"><a href="/index/">New Questions</a></p>
+      </div>
+{% block tag %}
+{% include "shablon/tags.html" %}
+{% endblock tag %}
+{% block newcontent %}
+{% for question in page_obj %}
+<div style="margin: -40px 70px 80px;
+    width: 700px;
+    height: 400px;
+    border: 2px solid black;
+    border-radius: 20px; background: whitesmoke;
+">
+<p style="text-align:center; color: blue"><a href="{% url 'question' pk=question.id %}">{{question.title}}</a></p><br>
+<p style="margin:-10px 2px 1px"><img style="margin: -20px 15px 2px;
+    border-radius: 20px;
+    border: 2px solid red; height:80px; width:80px" src="{{question.author.avatar.url}}" height="80px" class="pic">{{question.text}}</p>
+{% csrf_token %}
+<div class="strelka">
+<p>{{ question.rating }}
+<a href="#" class="js-vote arrow up js-{{ question.id }}" data-action="like" data-qid="{{ question.pk }}">
+<button style="
+    height: 18px;
+    width: 36px;
+    margin: -25.5px 42px 0px;
+">
+<img src="/static/strelka1.png" style="
+    height: 13px;
+    width: 21px;
+    margin: -1px;
+"></button></a>
+<a href="#" class="js-vote arrow down js-{{ question.id }}" data-action="dislike" data-qid="{{ question.pk }}">
+<button style="
+    margin: -7.4px 42px 0px;
+    height: 18px;
+    width: 36px;
+    ">
+	<img src="/static/strelka2.png" style="
+    margin: 0 0 1;
+    height: 13px;
+    width: 21px;
+"></button></a>
+	</p>
+</div>
+<p style="margin: 0px 17px 40px;"><a href="{% url 'question' pk=question.id %}">answer<span class="ans-count">({{ question.answers.all.count }})</span></a>
+ Tags:{% for tag in question.tags.all %}
+            <a href="{% url 'tag_question' str=tag %}">{{ tag }}</a>
+            {% endfor %}</p>
+	<p style="
+    margin: -60px 450px;
+    color: red;
+">{{question.author}}</p>
+<p style="
+    margin: 0px 570px;
+    color: green;
+">{{question.date}}</p>
+</div>
+{% endfor %}
+{% include "shablon/paginator.html" %}
+{% endblock newcontent %}
+{% include "shablon/footer.html" %}
+<script src="{% static 'jquery.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+ <script src="{% static 'csrf.js' %}"></script>
+ <script src="{% static 'vote.js' %}"></script>
+ <script src="{% static 'checkbox.js' %}"></script>
+   <script src="{% static 'centrifuge.min.js' %}"></script>
+  {% block script %}
+  {% endblock script %}
+</body></html>

@@ -1,0 +1,43 @@
+{% load static %}
+<html>
+<head>
+<link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+<link href="{% static "strelka.css" %}" rel="stylesheet">
+</head>
+<body>
+{% block content %}
+{% csrf_token %}
+<div class="strelka">
+<p>{{ answer.like_sum }}
+<a href="#" class="js-vote-ans arrow up js-ans-{{ answer.id }}" data-action="like" data-aid="{{ answer.id }}">
+<button style="
+    height: 18px;
+    width: 36px;
+    margin: -25.5px 42px 0px;
+"><img src="/static/strelka1.png" style="
+    height: 13px;
+    width: 21px;
+    margin: -1px;
+"></button></a>
+<a href="#" class="js-vote-ans arrow down js-ans-{{ answer.id }}" data-action="dislike" data-aid="{{ answer.id }}">
+<button style="
+    margin: -7.4px 42px 0px;
+    height: 18px;
+    width: 36px;
+    "><img src="/static/strelka2.png" style="
+    margin: 0 0 1;
+    height: 13px;
+    width: 21px;
+"></button></a>
+	</p>
+</div>
+{% endblock content %}
+<script src="{% static 'jquery.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+ <script src="{% static 'csrf.js' %}"></script>
+ <script src="{% static 'vote.js' %}"></script>
+   <script src="{% static 'centrifuge.min.js' %}"></script>
+  {% block script %}
+  {% endblock script %}
+</body>
+</html>

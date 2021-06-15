@@ -1,0 +1,24 @@
+<div style="
+    align: right;
+    margin: 135px 1300px 0px 1100px;
+    height: 50px;
+    width: 550;
+">
+        <h4 style="color: red">Popular Tags</h4>
+		<div>
+		 {% for tag in popular_tags %}
+		 <ul>
+		 <li><a href="{% url 'tag_question' str=tag.name %}" style="color:#0000FF; font-style:italic">{{ tag.name }}</a></li>
+		 </ul>
+		 {% endfor %}
+		 </div>
+		 <div>
+		 <h4 style="
+    margin: 25px 0px; color: red">Best Members</h4>
+	{% for author in authors %}
+		 <ul>
+		 <li style="color:#8B0000; font-style:italic">{{author}}</li>
+		 </ul>
+		 {% endfor %}
+		 </div>
+    </div>

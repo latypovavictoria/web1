@@ -1,0 +1,104 @@
+{% load static %}
+{% load bootstrap4 %}
+<html>
+<head>
+ <meta charset="utf-8">
+ <title>Answer</title>
+<link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+<link href="{% static "index.css" %}" rel="stylesheet">
+<link rel="icon" href="{% static "eye.png" %}" type="image/x-icon">
+</head>
+<body>
+{% include "shablon/navbar.html" %}
+	<div>
+<h4 style="
+    margin: 155px 95px 0px;
+    /* float: left; */
+    display: inline-block;
+">Settings</h4><p style="
+    margin: -25px 250px;
+"></p>
+</div>
+{% block tag %}
+{% include "shablon/tags.html" %}
+{% endblock tag %}
+<div class="question">
+    <div class="col-2">
+        <p><img style="margin: -15px 15px;
+    border-radius: 20px;
+    border: 2px solid red;
+    height: 79px;
+    width: 79;" src="{{question.author.avatar.url}}">{{question.title}}</p>
+        <div class = "like">
+            <a href="#" class="js-vote arrow up js-{{ question.id }}" data-action="like" data-qid="{{ question.pk }}"></a>
+            {% if question.like %}
+            <div class = "vote q-{{ question.id }}">{{ question.like }}</div>
+            {% else %}
+            <div class = "vote q-{{ question.id }}">{{ 0 }}</div>
+            {% endif %}
+            <a href="#" class="js-vote arrow down js-{{ question.id }}" data-action="dislike" data-qid="{{ question.pk }}"></a>
+        </div>
+    </div>
+        <span class= "author">Author: {{ question.author.user.username }}</span>
+        <span class= "date">{{ question.date }}</span>
+        <div class= "text q-text">{{ question.text }}</div>
+        <div class="bottom-ans">
+        <a href="{% url 'one_question' pk=question.id %}">answer <span class="ans-count">({{ question.answers.all.count }})</span></a>
+        <span class="tags">Tags:
+            {% for tag in question.tags.all %}
+            <a href="{% url 'tagged_questions' str=tag %}">{{ tag }}</a>
+            {% endfor %}
+        </span>
+        </div>
+    </div>
+
+{% for answer in object_list %}
+    <div class="row answer">
+    <div class="col-2">
+        <div><img src="{{ answer.author.avatar.url }}"></div>
+        <div class = "like">
+            <a href="#" class="js-vote-ans arrow up js-ans-{{ answer.id }}" data-action="like" data-aid="{{ answer.id }}"></a>
+            {% if answer.like_sum %}
+            <div class = "vote ans-{{ answer.id }}">{{ answer.like_sum }}</div>
+            {% else %}
+            <div class = "vote ans-{{ answer.id }}">{{ 0 }}</div>
+            {% endif %}
+            <a href="#" class="js-vote-ans arrow down js-ans-{{ answer.id }}" data-action="dislike" data-aid="{{ answer.id }}"></a>
+        </div>
+    </div>
+    <div class="col-10">
+        <span class= "ans_author">{{ answer.author.user.username }}</span>
+        <div class= "data">{{ answer.date }}</div>
+        <div class= "q-text">{{ answer.text }}</div>
+        <div class="form-check bottom-ans">
+            {% if answer.question.author.id == request.user.author.id %}
+            {% if answer.checked %}
+            <input class="form-check-input check-{{ answer.id }}" type="checkbox" value="" data-aid="{{ answer.id }}" checked>
+            {% else %}
+            <input class="form-check-input check-{{ answer.id }}" type="checkbox" value="" data-aid="{{ answer.id }}">
+            {% endif %}
+            <label class="form-check-label">
+                Correct!
+            </label>
+            {% elif answer.checked %}
+            <i class="check-text">Checked as correct by OP</i>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+
+<form class="answer" action="/answer/" method="post">
+    {% csrf_token %}
+<div class="mb-3">
+    <input type="hidden" name="pk" value="{{ question.id }}" />
+    <textarea name="text" class="form-control" rows="4" placeholder="Enter your answer here"></textarea>
+</div>
+<div class="form-btn answer-btn">
+    <button class="btn my-btn" type="submit">Answer</button>
+</div>
+</form>
+</body>
+</html>
+

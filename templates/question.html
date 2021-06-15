@@ -1,0 +1,138 @@
+{% load static %}
+{% load bootstrap4 %}
+<html>
+<head>
+ <meta charset="utf-8">
+ <title>Question</title>
+<link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+<link href="{% static "index.css" %}" rel="stylesheet">
+<link rel="icon" href="{% static "eye.png" %}" type="image/x-icon">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    .pic{
+        float:left;
+        margin:0px 3px;
+    }
+    </style>
+</head>
+<body>
+{% include "shablon/navbar.html" %}
+<div>
+<h4 style="
+    margin: 155px 95px 0px;
+    /* float: left; */
+    display: inline-block;
+">Question</h4><p style="
+    margin: -25px 250px;
+"></p>
+</div>
+{% block tag %}
+{% include "shablon/tags.html" %}
+{%endblock tag%}
+{% block content %}
+<div class="question" style="
+    background: whitesmoke;
+    align: left;
+	height:310px
+">
+<a href="{% url 'question' pk=question.id %}"><p style="text-align:center">{{question.title}}</p></a><br>
+<p><img style="    margin: -15px 15px;
+    border-radius: 20px;
+    border: 2px solid red;
+    height: 79px;
+    width: 79;" src="{{question.author.avatar.url}}" height="80px" class="pic">{{question.text}}</p>
+	{% csrf_token %}
+	{% include "shablon/strelkan.html" %}
+ <p style="margin: 0px 17px 40px;"><a href="{% url 'question' pk=question.id %}">answer<span class="ans-count">({{ question.answers.all.count }})</span></a>
+ Tags:{% for tag in question.tags.all %}
+            <a href="{% url 'tag_question' str=tag %}">{{ tag }}</a>
+            {% endfor %}</p>
+	<p style="
+    margin: -60px 400px;
+    color: red;
+">{{question.author.user.username}}</p>
+<p style="
+    margin: 0px 570px;
+    color: green;
+">{{question.date}}</p>
+</div>
+{% for answer in page_obj %}
+<div class="question" style="
+    background: whitesmoke;
+    align: left;
+	height: 340px
+">
+<p style="margin:10px"><img style="margin: 10px 4px 4px 5px;
+    border-radius: 20px;
+    border: 2px solid red;
+    height: 79px;
+    width: 79;" src="{{answer.author.avatar.url}}" height="80px">{{answer.text}}</p>
+{% csrf_token %}
+	{% include "shablon/strelka.html" %}
+	<p style="
+    margin: -60px 400px;
+    color: red;
+">{{answer.author.user.username}}</p>
+{% csrf_token %}
+<div style="margin: 140px 20px -50px;">
+            {% if answer.question.author.id == request.user.author.id %}
+            {% if answer.checked %}
+            <input class="form-check-input check-{{ answer.id }}" type="checkbox" value="" data-aid="{{ answer.id }}" checked>
+            {% else %}
+            <input class="form-check-input check-{{ answer.id }}" type="checkbox" value="" data-aid="{{ answer.id }}">
+            {% endif %}
+            <label>
+                Correct!
+            </label>
+            {% elif answer.checked %}
+            <i style="color: green; font-weight: 600">Correct by {{answer.question.author.user}}</i>
+            {% endif %}
+			</div>
+<p style="
+    margin: 0px 570px;
+    color: green;
+">{{answer.date}}</p>
+</div>
+{% endfor %}
+<form  action="/answer/" method="post" style="margin: 10px 70px;
+    border-radius: 20px;
+    border: 2px solid black;
+    background-color: whitesmoke;
+    width: 700px;
+    height: 200px;">
+    {% csrf_token %}
+<div class="mb-3" style="margin: 20px 46px;
+    height: 50px;
+    width: 600;">
+    <input type="hidden" name="pk" value="{{ question.id }}" />
+    <textarea name="text" class="form-control" rows="4" placeholder="Enter your answer here"></textarea>
+</div>
+<div class="form-btn answer-btn">
+    <button style="margin: 60px 47px;
+    border: 2px solid black;
+    background-color: darkred;
+    height: 40px;
+    width: 80px;
+    color: white;" type="submit">Answer!</button>
+</div>
+</form>
+{% include "shablon/paginator.html" %}
+{% endblock content %}
+{%include "shablon/footer.html" %}
+ <script src="{% static 'checkbox.js' %}"></script>
+  {% block script %}
+  {% endblock script %}
+</body>
+</html>
